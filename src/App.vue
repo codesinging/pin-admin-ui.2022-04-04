@@ -8,6 +8,12 @@ import HelloWorld from './components/HelloWorld.vue'
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + Vite" />
     <div class="bg-gray-100 p-4 font-bold">Hello TailwindCSS</div>
+
+    <div class="p-4">
+        <el-button>Primary</el-button>
+        <el-button type="primary">Primary</el-button>
+        <el-button type="success">Primary</el-button>
+    </div>
 </template>
 
 <style>

@@ -5,7 +5,11 @@ const prefix = 'store__'
 const get = (key, def) => storage.get(prefix + key, def)
 
 const set = (key, value, expired = 0) => {
-    storage.set(prefix + key, value, expired)
+    if (value !== null){
+        storage.set(prefix + key, value, expired)
+    } else {
+        storage.remove(prefix + key)
+    }
     return value
 }
 

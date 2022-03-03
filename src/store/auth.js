@@ -9,21 +9,19 @@ export const useAuth = defineStore('state', {
         expire: persist.get('expire'),
     }),
 
+    getters: {
+        hasUser: state => state.user !== null,
+        hasToken: state => state.token !== null,
+        notExpired: state => state.expire === null || (state.expire >= new Date().getTime()),
+    },
+
     actions: {
-        setToken(token) {
+        setToken(token = null) {
             this.token = persist.set('token', token)
         },
 
-        removeToken() {
-            this.token = persist.remove('token')
-        },
-
-        setUser(user) {
+        setUser(user = null) {
             this.user = persist.set('user', user)
-        },
-
-        removeUser() {
-            this.user = persist.remove('user')
         },
 
         updateExpire() {
@@ -34,6 +32,32 @@ export const useAuth = defineStore('state', {
 
         removeExpire() {
             this.expire = persist.remove('expire')
-        }
+        },
+
+        login(token, user) {
+            this.setToken(token)
+            this.setUser(user)
+            this.updateExpire()
+        },
+
+        logout() {
+            this.setToken()
+            this.setUser()
+            this.removeExpire()
+        },
+
+        check() {
+            return new Promise((resolve, reject) => {
+                if (config.enable === false) {
+                    resolve()
+                } else if (this.hasToken && this.hasUser && this.notExpired) {
+                    this.updateExpire()
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
+        },
+
     },
 })

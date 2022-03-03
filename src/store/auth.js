@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import persist from "../utils/persist"
-import config from '../configs/auth'
+import {authConfig} from "../configs";
 
 export const useAuth = defineStore('state', {
     state: () => ({
@@ -25,8 +25,8 @@ export const useAuth = defineStore('state', {
         },
 
         updateExpire() {
-            if (config.expire > 0) {
-                this.expire = persist.set('expire', config.expire + new Date().getTime())
+            if (authConfig.expire > 0) {
+                this.expire = persist.set('expire', authConfig.expire + new Date().getTime())
             }
         },
 
@@ -48,7 +48,7 @@ export const useAuth = defineStore('state', {
 
         check() {
             return new Promise((resolve, reject) => {
-                if (config.enable === false) {
+                if (authConfig.enable === false) {
                     resolve()
                 } else if (this.hasToken && this.hasUser && this.notExpired) {
                     this.updateExpire()

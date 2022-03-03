@@ -1,11 +1,11 @@
 import axios from "axios"
-import config from '../configs/http'
 import message from "./message"
 import {useState} from "../store/state"
+import {httpConfig} from "../configs"
 
 const defaultLabel = 'loading'
 
-const http = axios.create(config)
+const http = axios.create(httpConfig)
 
 const setStates = (config) => {
     const state = useState()

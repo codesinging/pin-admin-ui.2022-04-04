@@ -1,4 +1,4 @@
-import config from '../configs/storage'
+import {storageConfig} from "../configs";
 
 class Storage {
     constructor(prefix, driver) {
@@ -55,4 +55,4 @@ class Storage {
     }
 }
 
-export default new Storage(config.prefix, config.driver)
+export default new Storage(storageConfig.prefix, storageConfig.driver)

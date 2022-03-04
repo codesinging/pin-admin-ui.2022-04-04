@@ -2,7 +2,7 @@ import {defineStore} from "pinia"
 import persist from "../utils/persist"
 import {authConfig} from "../configs";
 
-export const useAuth = defineStore('state', {
+export const useAuth = defineStore('auth', {
     state: () => ({
         token: persist.get('token'),
         user: persist.get('user'),

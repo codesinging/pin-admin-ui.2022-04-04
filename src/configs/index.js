@@ -21,3 +21,10 @@ export const storageConfig = {
     prefix: 'pin_admin_',
     driver: window.localStorage,
 }
+
+export const layoutConfig = {
+    sidebar: {
+        minWidth: 54,
+        maxWidth: 200,
+    },
+}

@@ -2,17 +2,26 @@ import axios from "axios"
 import message from "./message"
 import {useState} from "../store/state"
 import {httpConfig} from "../configs"
+import {useAuth} from "../store/auth";
 
 const defaultLabel = 'loading'
 
 const http = axios.create(httpConfig)
+
+http.interceptors.request.use(config => {
+    const auth = useAuth()
+    if (auth.token) {
+        config.headers.Authorization = 'Bearer ' + auth.token
+    }
+    return config
+})
 
 const setStates = (config) => {
     const state = useState()
 
     state.set(defaultLabel)
 
-    if (config.label){
+    if (config.label) {
         state.set(config.label)
     }
 }
@@ -22,7 +31,7 @@ const unsetStates = config => {
 
     state.unset(defaultLabel)
 
-    if (config.label){
+    if (config.label) {
         state.unset(config.label)
     }
 }
@@ -32,13 +41,13 @@ const logError = (title, content) => {
 }
 
 const showSuccess = (content, config) => {
-    if (config.message || config.successMessage) {
+    if (config.message !== false && (config.message || config.successMessage)) {
         message.success(typeof config.successMessage === 'string' ? config.successMessage : content)
     }
 }
 
 const showError = (content, config) => {
-    if (config.message || config.errorMessage) {
+    if (config.message !== false && (config.message || config.errorMessage)) {
         message.error(typeof config.errorMessage === 'string' ? config.errorMessage : content)
         logError('http config', config)
     }

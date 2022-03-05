@@ -28,9 +28,16 @@ export const useLayout = defineStore('layout', {
         },
 
         addTab(tab) {
-            if (this.tabs.findIndex(item => item.id === tab.id) === -1) {
+            if (tab?.id && this.tabs.findIndex(item => item.id === tab.id) === -1) {
                 this.tabs.push(tab)
             }
+        },
+
+        clear(){
+            this.collapsed = false
+            this.menus = []
+            this.activeMenu = null
+            this.tabs = []
         },
     },
 })

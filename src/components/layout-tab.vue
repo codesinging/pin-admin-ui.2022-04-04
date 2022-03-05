@@ -1,5 +1,5 @@
 <template>
-    <div class="flex px-4 mt-4">
+    <div v-if="tabs.length > 0" class="flex px-4 mt-4">
         <div class="flex-1 overflow-hidden layout-tab">
             <el-tabs v-model="activeTabId" type="card" @tab-remove="onTabRemove">
                 <el-tab-pane v-for="(tab,index) in tabs" :key="index" :label="tab.name" :name="tab.id" :closable="!tab.is_home"></el-tab-pane>
@@ -45,7 +45,7 @@ const router = useRouter()
 
 const tabs = computed(() => layout.tabs)
 const activeTab = computed(() => layout.activeMenu)
-const activeTabId = ref(layout.activeMenu.id)
+const activeTabId = ref(layout.activeMenu?.id)
 
 const removeTab = tab => {
     if (tab.id === layout.homeMenu.id) {

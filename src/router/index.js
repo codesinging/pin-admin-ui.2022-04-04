@@ -2,7 +2,7 @@ import {createRouter, createWebHashHistory} from "vue-router"
 import routes from '~pages'
 import guests from "./guests"
 import {useAuth} from "../store/auth";
-import {authConfig} from "../configs";
+import {appConfig, authConfig} from "../configs";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -10,6 +10,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    if (to.path === '/') next(appConfig.home)
+
     if (guests.includes(to.path)) {
         next()
     } else {

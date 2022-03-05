@@ -34,7 +34,7 @@ const router = useRouter()
 
 screensaver.show('loading')
 
-apis.auth.menus({label: 'menu', message: false}).then(menus => {
+apis.auth.menus({label: 'menu', message: false, catch: true}).then(menus => {
     menus = menus || []
     menus.forEach(item => {
         item.id = item.id.toString()
@@ -52,6 +52,8 @@ apis.auth.menus({label: 'menu', message: false}).then(menus => {
     layout.addTab(currentMenu)
     layout.setActiveMenu(currentMenu)
 
+    screensaver.hide()
+}).catch(() => {
     screensaver.hide()
 })
 </script>

@@ -44,15 +44,20 @@ const screensaver = useScreenSaver()
 
 const {isFullscreen, toggle: toggleFullscreen} = useFullscreen()
 
-const pagePaths = computed(() => treePath(layout.menuTree, 'path', layout.activeMenu.path))
+const pagePaths = computed(() => treePath(layout.menuTree, 'path', layout.activeMenu?.path))
 
 const user = computed(() => auth.user)
 
 const logout = () => {
     screensaver.show('正在退出登录')
 
-    apis.auth.logout().then(res=>{
+    apis.auth.logout({}, {catch: true}).then(res=>{
+
+    }).catch(()=>{
+
+    }).finally(() => {
         auth.logout()
+        layout.clear()
         router.push(authConfig.login).then(() => {
             screensaver.hide()
         })

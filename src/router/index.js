@@ -10,17 +10,19 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path === '/') next(appConfig.home)
-
-    if (guests.includes(to.path)) {
-        next()
+    if (to.path === '/') {
+        next(appConfig.home)
     } else {
-        const auth = useAuth()
-        auth.check().then(res => {
+        if (guests.includes(to.path)) {
             next()
-        }).catch(() => {
-            next(authConfig.login)
-        })
+        } else {
+            const auth = useAuth()
+            auth.check().then(res => {
+                next()
+            }).catch(() => {
+                next(authConfig.login)
+            })
+        }
     }
 })
 
